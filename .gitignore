@@ -1,0 +1,67 @@
+# ===============================
+# Python
+# ===============================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# ===============================
+# Virtual Environments
+# ===============================
+venv/
+env/
+.venv/
+.env.*
+
+# ===============================
+# Environment Variables
+# ===============================
+.env
+
+# ===============================
+# Django
+# ===============================
+*.log
+db.sqlite3
+media/
+staticfiles/
+
+# Migrations (keep __init__.py)
+migrations/
+!migrations/__init__.py
+
+# ===============================
+# IDE / Editor
+# ===============================
+.vscode/
+.idea/
+*.swp
+
+# ===============================
+# OS
+# ===============================
+.DS_Store
+Thumbs.db
+
+# ===============================
+# Hugging Face / Transformers
+# ===============================
+.cache/
+.huggingface/
+transformers_cache/
+torch_cache/
+
+# ===============================
+# Build / Distribution
+# ===============================
+build/
+dist/
+*.egg-info/
+
+# ===============================
+# Test / Lint
+# ===============================
+.pytest_cache/
+.mypy_cache/
+coverage/
