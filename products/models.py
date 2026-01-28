@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.conf import settings
 
 class Product(models.Model):
     name= models.CharField(max_length=100)
@@ -36,28 +37,39 @@ class Product(models.Model):
         return self.name
     
 class Order(models.Model):
-    product=models.ForeignKey(Product,on_delete=models.CASCADE)
-    user_id=models.CharField(max_length=100)
-    total_payment=models.DecimalField(decimal_places=10,max_digits=20)
-    order_data=models.DateTimeField(auto_now_add=True)
-    status=models.CharField(max_length=20)
-    last_updated=models.DateTimeField(auto_now=True)
-    track_number=models.BigIntegerField()
-    shipping_address=models.TextField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="orders",
+    )
+    total_payment = models.DecimalField(decimal_places=10, max_digits=20)
+    order_data = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20)
+    last_updated = models.DateTimeField(auto_now=True)
+    track_number = models.BigIntegerField()
+    shipping_address = models.TextField()
 
     # def __str__(self):
-    #     return self.product.name+" order"
+    #     return f"Order {self.track_number} - {self.product.name}"
+
 
 class Reviews(models.Model):
-        product=models.ForeignKey(Product,on_delete=models.CASCADE)
-        user=models.CharField(max_length=100)
-        review=models.TextField()
-        rating=models.IntegerField(validators=[
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="reviews",
+    )
+    review = models.TextField()
+    rating = models.IntegerField(
+        validators=[
             MinValueValidator(0),
-            MaxValueValidator(5)
-        ])
-        rated_date=models.DateTimeField(auto_now_add=True)
-        last_updated=models.DateTimeField(auto_now=True)
+            MaxValueValidator(5),
+        ]
+    )
+    rated_date = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
 
 class ReviewAnalysis(models.Model):
     product = models.OneToOneField(

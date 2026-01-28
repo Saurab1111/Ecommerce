@@ -1,3 +1,6 @@
-from .celery_app import app as celery_app
+"""
+Package initializer for the Amazon Django project.
 
-__all__ = ['celery_app']
+Celery integration has been removed to keep the project fully offline
+and dependency-free from external brokers/queues.
+"""
